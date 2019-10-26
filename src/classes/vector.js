@@ -71,12 +71,17 @@ export class Vector {
         throw Flatten.Errors.ILLEGAL_PARAMETERS;
     }
 
+    static fromPolar([theta, length]) {
+        if (length === 0) {return new this();}
+        return new this(Math.cos(theta) * length, Math.sin(theta) * length);
+    }
+
     /**
      * Method clone returns new instance of Vector
      * @returns {Vector}
      */
     clone() {
-        return new Flatten.Vector(this.x, this.y);
+        return new this.constructor(this.x, this.y);
     }
 
     /**
@@ -87,6 +92,10 @@ export class Vector {
         let angle = Math.atan2(this.y, this.x);
         if (angle < 0) angle = 2 * Math.PI + angle;
         return angle;
+    }
+
+    get angle() {
+        return Math.atan2(this.y, this.x);
     }
 
     /**
@@ -113,7 +122,7 @@ export class Vector {
      * @returns {Vector}
      */
     multiply(scalar) {
-        return (new Flatten.Vector(scalar * this.x, scalar * this.y));
+        return (new this.constructor(scalar * this.x, scalar * this.y));
     }
 
     /**
@@ -143,7 +152,7 @@ export class Vector {
      */
     normalize() {
         if (!Flatten.Utils.EQ_0(this.length)) {
-            return (new Flatten.Vector(this.x / this.length, this.y / this.length));
+            return (new this.constructor(this.x / this.length, this.y / this.length));
         }
         throw Flatten.Errors.ZERO_DIVISION;
     }
@@ -158,7 +167,7 @@ export class Vector {
     rotate(angle) {
         let point = new Flatten.Point(this.x, this.y);
         let rpoint = point.rotate(angle);
-        return new Flatten.Vector(rpoint.x, rpoint.y);
+        return new this.constructor(rpoint.x, rpoint.y);
     }
 
     /**
@@ -166,7 +175,7 @@ export class Vector {
      * @returns {Vector}
      */
     rotate90CCW() {
-        return new Flatten.Vector(-this.y, this.x);
+        return new this.constructor(-this.y, this.x);
     };
 
     /**
@@ -174,7 +183,7 @@ export class Vector {
      * @returns {Vector}
      */
     rotate90CW() {
-        return new Flatten.Vector(this.y, -this.x);
+        return new this.constructor(this.y, -this.x);
     };
 
     /**
@@ -182,7 +191,7 @@ export class Vector {
      * @returns {Vector}
      */
     invert() {
-        return new Flatten.Vector(-this.x, -this.y);
+        return new this.constructor(-this.x, -this.y);
     }
 
     /**
@@ -191,7 +200,7 @@ export class Vector {
      * @returns {Vector}
      */
     add(v) {
-        return new Flatten.Vector(this.x + v.x, this.y + v.y);
+        return new this.constructor(this.x + v.x, this.y + v.y);
     }
 
     /**
@@ -200,7 +209,7 @@ export class Vector {
      * @returns {Vector}
      */
     subtract(v) {
-        return new Flatten.Vector(this.x - v.x, this.y - v.y);
+        return new this.constructor(this.x - v.x, this.y - v.y);
     }
 
     /**
@@ -237,7 +246,23 @@ export class Vector {
     toJSON() {
         return Object.assign({}, this, {name: "vector"});
     }
-};
+
+    circleAttrs(attrs={}){
+       return {cx: this.x, cy: this.y, ...attrs} ;
+    }
+
+    toArray() {
+        return [this.x, this.y];
+    }
+
+    toPolar() {
+        return [this.angle, this.length];
+    }
+
+    lerpTo(pt, ratio) {
+        return new this.constructor(this.x + (pt.x - this.x) * ratio,  this.y + (pt.y - this.y) * ratio);
+    }
+}
 
 Flatten.Vector = Vector;
 

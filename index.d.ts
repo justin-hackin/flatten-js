@@ -207,6 +207,7 @@ declare namespace Flatten {
         translate(vec: Vector): Point;
         translate(x: number, y: number): Point;
         toJSON() : Object;
+
     }
 
     class Ray {

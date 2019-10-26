@@ -362,6 +362,10 @@ export class Polygon {
         return svgStr;
     }
 
+    pathAttrs  (attrs = {}) {
+        return {d: Array.from(this.faces).map((face) => face.svg()).join(''), ...attrs};
+    };
+
     /**
      * This method returns an object that defines how data will be
      * serialized when called JSON.stringify() method

@@ -3,29 +3,30 @@
  */
 
 import Flatten from '../flatten';
+import { Vector } from './vector';
 
 /**
  *
  * Class representing a point
  * @type {Point}
  */
-export class Point {
+export class Point extends Vector {
     /**
      * Point may be constructed by two numbers, or by array of two numbers
      * @param {number} x - x-coordinate (float number)
      * @param {number} y - y-coordinate (float number)
      */
     constructor(...args) {
+        /* only sets x and y to 0 */
+        super();
         /**
          * x-coordinate (float number)
          * @type {number}
          */
-        this.x = 0;
         /**
          * y-coordinate (float number)
          * @type {number}
          */
-        this.y = 0;
 
         if (args.length === 0) {
             return;
