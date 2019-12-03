@@ -3605,6 +3605,14 @@ class Box {
         return new Flatten.Point(this.xmax, this.ymax);
     }
 
+    get width() {
+        return Math.abs(this.xmax - this.xmin);
+    }
+
+    get height() {
+        return Math.abs(this.ymax - this.ymin);
+    }
+
     /**
      * Property max returns the box itself !
      * @returns {Box}
