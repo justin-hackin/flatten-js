@@ -557,8 +557,7 @@ declare namespace Flatten {
     function vector(x?: number, y?: number) : Vector;
     function vector(arr: [number, number]) : Vector;
     function vector(p1: Point, p2: Point) : Vector;
-    function ray(pt?: Point) : Ray;
-    function ray(x: number, y: number): Ray;
+    function ray(pt?: Point, pt?: Vector) : Ray;
     function matrix(a: number, b: number, c: number, d: number, tx: number, ty: number) : Matrix;
 }
 
